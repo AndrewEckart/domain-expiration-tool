@@ -26,6 +26,6 @@ command-line arguments like so:
 
 ```bash
 $ python3 main.py google.com wikipedia.org
-Registration for google.com expires at 2028-09-14 04:00:00.
-Registration for wikipedia.org expires at 2023-01-13 00:00:00.
+Registration for google.com expires on 2028-09-14 at 04:00:00.
+Registration for wikipedia.org expires on 2023-01-13 at 00:00:00.
 ```
