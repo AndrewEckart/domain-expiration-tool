@@ -33,9 +33,9 @@ def whois_cmd_exists() -> bool:
 
 def run_whois_cmd(domain: str, timeout=5) -> None:
     cmd = ['whois', domain]
-    proc: sp.CompletedProcess
-    proc = sp.run(cmd, capture_output=True, timeout=timeout)
     try:
+        proc: sp.CompletedProcess
+        proc = sp.run(cmd, capture_output=True, timeout=timeout)
         proc.check_returncode()
         parse_output(domain, proc.stdout)
     except sp.TimeoutExpired:
@@ -43,10 +43,12 @@ def run_whois_cmd(domain: str, timeout=5) -> None:
     except sp.CalledProcessError as e:
         # Sometimes CalledProcessError: Connection reset by peer is thrown,
         # even when the request succeeds.
-        if 'Connection reset by peer' in str(e.stderr, 'utf-8'):
+        stderr = str(e.stderr, 'utf-8')
+        if 'Connection reset by peer' in stderr:
             parse_output(domain, proc.stdout)
         else:
             print('Error:', e)
+            print(stderr)
 
 
 def parse_output(domain: str, data: bytes) -> None:
